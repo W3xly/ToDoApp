@@ -12,12 +12,20 @@ struct AddTodoView: View {
     
     //MARK: - Properties
     
+    // enable to access internal storage
+    @Environment(\.managedObjectContext) var managedObjectContext
+    
     @Environment(\.presentationMode) var presentationMode
-        
+    
     @State private var name: String = ""
     @State private var priority: String = "Normal"
     
     let priorities = ["High", "Normal", "Low"]
+    
+    @State private var errorShowing: Bool = false
+    @State private var errorTitle: String = ""
+    @State private var errorMessage: String = ""
+    
     
     //MARK: - Body
     
@@ -34,7 +42,24 @@ struct AddTodoView: View {
                     .pickerStyle(SegmentedPickerStyle())
                     
                     Button(action: {
-                        print("DEBUG: Save item..")
+                        if self.name != "" {
+                            let todo = Todo(context: self.managedObjectContext)
+                            todo.name = self.name
+                            todo.priority = self.priority
+                            do {
+                                try self.managedObjectContext.save()
+                                print("DEBUG: New todo: \(todo.name ?? "") with \(todo.priority ?? "") priority")
+                            }
+                            catch {
+                                print("DEBUG: Error: \(error.localizedDescription)")
+                            }
+                        } else {
+                            self.errorShowing = true
+                            self.errorTitle = "Invalid name"
+                            self.errorMessage = "Make sure to enter name of new todo item."
+                            return
+                        }
+                        self.presentationMode.wrappedValue.dismiss()
                     }) {
                         Text("Save")
                     }
@@ -42,12 +67,17 @@ struct AddTodoView: View {
                 Spacer()
             } //END: VStack
                 .navigationBarTitle("New Todo", displayMode: .inline)
-            .navigationBarItems(trailing:
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }, label: {
-                    Image(systemName: "xmark")
-                }))
+                .navigationBarItems(trailing:
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Image(systemName: "xmark")
+                    }))
+                .alert(isPresented: $errorShowing, content: {
+                    Alert(title: Text(errorTitle),
+                          message: Text(errorMessage),
+                          dismissButton: .default(Text("OK")))
+                })
         } //END: NavigationView
     } //END: body
 }

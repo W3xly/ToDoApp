@@ -12,6 +12,9 @@ struct ContentView: View {
     
     //MARK: - Properties
     
+    // enable to access internal storage
+    @Environment(\.managedObjectContext) var managedObjectContext
+    
     @State private var showingAddTodoView: Bool = false
     
     //MARK: - Body
@@ -28,7 +31,8 @@ struct ContentView: View {
                     Image(systemName: "plus")
                 }) //END: Button
                     .sheet(isPresented: $showingAddTodoView, content: {
-                        AddTodoView()
+                        // passing manage object here
+                        AddTodoView().environment(\.managedObjectContext, self.managedObjectContext)
                     })
             )
         } //END: NavigationView
