@@ -9,9 +9,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    //MARK: - Properties
+    
+    @State private var showingAddTodoView: Bool = false
+    
+    //MARK: - Body
     var body: some View {
-        Text("Hello, World!")
-    }
+        NavigationView {
+            List(0..<5) { item in
+                Text("Hello!")
+            } //END: List
+            .navigationBarTitle("Todo", displayMode: .inline)
+            .navigationBarItems(trailing:
+                Button(action: {
+                    self.showingAddTodoView.toggle()
+                }, label: {
+                    Image(systemName: "plus")
+                }) //END: Button
+                    .sheet(isPresented: $showingAddTodoView, content: {
+                        AddTodoView()
+                    })
+            )
+        } //END: NavigationView
+    } //END: body
 }
 
 struct ContentView_Previews: PreviewProvider {

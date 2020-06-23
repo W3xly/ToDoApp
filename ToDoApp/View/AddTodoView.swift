@@ -12,6 +12,8 @@ struct AddTodoView: View {
     
     //MARK: - Properties
     
+    @Environment(\.presentationMode) var presentationMode
+        
     @State private var name: String = ""
     @State private var priority: String = "Normal"
     
@@ -24,7 +26,6 @@ struct AddTodoView: View {
             VStack {
                 Form {
                     TextField("Todo", text: $name)
-                    
                     Picker("Priority", selection: $priority) {
                         ForEach(priorities, id: \.self) {
                             Text($0)
@@ -39,10 +40,16 @@ struct AddTodoView: View {
                     }
                 }
                 Spacer()
-            } // VStack
+            } //END: VStack
                 .navigationBarTitle("New Todo", displayMode: .inline)
-        } // NavigationView
-    }
+            .navigationBarItems(trailing:
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Image(systemName: "xmark")
+                }))
+        } //END: NavigationView
+    } //END: body
 }
 
 struct AddTodoView_Previews: PreviewProvider {
