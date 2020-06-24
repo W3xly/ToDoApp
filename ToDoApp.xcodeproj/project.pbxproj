@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10ED2EF224A3BB66006B4120 /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ED2EF124A3BB66006B4120 /* EmptyListView.swift */; };
 		10ED78B024A2492300E36F78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ED78AF24A2492300E36F78 /* AppDelegate.swift */; };
 		10ED78B224A2492300E36F78 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ED78B124A2492300E36F78 /* SceneDelegate.swift */; };
 		10ED78B524A2492300E36F78 /* ToDoApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 10ED78B324A2492300E36F78 /* ToDoApp.xcdatamodeld */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		10ED2EF124A3BB66006B4120 /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
 		10ED78AC24A2492300E36F78 /* ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10ED78AF24A2492300E36F78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		10ED78B124A2492300E36F78 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			children = (
 				10ED78B624A2492300E36F78 /* ContentView.swift */,
 				10ED78C624A24E9C00E36F78 /* AddTodoView.swift */,
+				10ED2EF124A3BB66006B4120 /* EmptyListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 			files = (
 				10ED78B024A2492300E36F78 /* AppDelegate.swift in Sources */,
 				10ED78B524A2492300E36F78 /* ToDoApp.xcdatamodeld in Sources */,
+				10ED2EF224A3BB66006B4120 /* EmptyListView.swift in Sources */,
 				10ED78B724A2492300E36F78 /* ContentView.swift in Sources */,
 				10ED78B224A2492300E36F78 /* SceneDelegate.swift in Sources */,
 				10ED78C724A24E9C00E36F78 /* AddTodoView.swift in Sources */,

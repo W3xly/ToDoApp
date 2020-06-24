@@ -22,30 +22,36 @@ struct ContentView: View {
     //MARK: - Body
     var body: some View {
         NavigationView {
-            List {
-                ForEach(self.todos, id: \.self) { todo in
-                    HStack {
-                        Text(todo.name ?? "Unknown")
-                        Spacer()
-                        Text(todo.priority ?? "Unknown")
-                    }
-                } //END: ForEach
-                .onDelete(perform: deleteTodo)
-            } //END: List
-                .navigationBarTitle("Todo", displayMode: .inline)
-                .navigationBarItems(
-                    leading: EditButton(),
-                    trailing:
-                    Button(action: {
-                        self.showingAddTodoView.toggle()
-                    }, label: {
-                        Image(systemName: "plus")
-                    }) //END: Button
-                        .sheet(isPresented: $showingAddTodoView, content: {
-                            // passing manage object here
-                            AddTodoView().environment(\.managedObjectContext, self.managedObjectContext)
-                        })
-            )
+            ZStack {
+                List {
+                    ForEach(self.todos, id: \.self) { todo in
+                        HStack {
+                            Text(todo.name ?? "Unknown")
+                            Spacer()
+                            Text(todo.priority ?? "Unknown")
+                        }
+                    } //END: ForEach
+                        .onDelete(perform: deleteTodo)
+                } //END: List
+                    .navigationBarTitle("Todo", displayMode: .inline)
+                    .navigationBarItems(
+                        leading: EditButton(),
+                        trailing:
+                        Button(action: {
+                            self.showingAddTodoView.toggle()
+                        }, label: {
+                            Image(systemName: "plus")
+                        }) //END: Button
+                            .sheet(isPresented: $showingAddTodoView, content: {
+                                // passing manage object here
+                                AddTodoView().environment(\.managedObjectContext, self.managedObjectContext)
+                            })
+                )
+                //MARK: - Empty todo view
+                if todos.count == 0 {
+                    EmptyListView()
+                }
+            } //END: ZStack
         } //END: NavigationView
     } //END: body
     
