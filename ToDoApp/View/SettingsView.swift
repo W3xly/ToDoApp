@@ -12,6 +12,7 @@ struct SettingsView: View {
     //MARK: - Properties
     
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var iconSettings: IconNames
     
     //MARK: - Body
     
@@ -19,6 +20,7 @@ struct SettingsView: View {
         NavigationView {
             VStack(alignment: .center, spacing: 0) {
                 Form {
+                    //MARK: - AppIcons
                     //MARK: - LinkViews
                     Section(header: Text("Follow me on social media")) {
                         FormRowLinkView(icon: "globe", color: Color.pink, text: "Linked In", link: "https://www.linkedin.com/in/jan-podmolik/")
@@ -62,6 +64,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView().environmentObject(IconNames())
     }
 }

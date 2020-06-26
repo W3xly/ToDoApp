@@ -17,6 +17,8 @@ struct ContentView: View {
     // sortDescriptor -> sorted by name -> true = alphabetical order
     @FetchRequest(entity: Todo.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Todo.name, ascending: true)]) var todos: FetchedResults<Todo>
     
+    @EnvironmentObject var iconSettings: IconNames
+    
     @State private var showingAddTodoView: Bool = false
     @State private var animatingButton: Bool = false
     @State private var showingSettingsView: Bool = false
@@ -46,7 +48,7 @@ struct ContentView: View {
                                 .imageScale(.large)
                         }) //END: Button
                             .sheet(isPresented: $showingSettingsView, content: {
-                                SettingsView()
+                                SettingsView().environmentObject(self.iconSettings)
                             })
                 )
                 //MARK: - Empty todo view
