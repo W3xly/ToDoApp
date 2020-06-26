@@ -12,7 +12,7 @@ struct SettingsView: View {
     //MARK: - Properties
     
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var iconSettings: IconNames
+    @EnvironmentObject var icons: IconNames
     
     //MARK: - Body
     
@@ -21,13 +21,70 @@ struct SettingsView: View {
             VStack(alignment: .center, spacing: 0) {
                 Form {
                     //MARK: - AppIcons
+                    Section(header: Text("Choose the app icon")) {
+                        Picker(selection: $icons.currentIndex, label:
+                            
+                            HStack {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                        .strokeBorder(Color.primary, lineWidth: 2)
+                                    
+                                    Image(systemName: "paintbrush")
+                                        .font(.system(size: 28, weight: .regular, design: .default))
+                                        .foregroundColor(Color.primary)
+                                }
+                                .frame(width: 44, height: 44)
+                                Text("App Icons".uppercased())
+                                    .fontWeight(.bold)
+                                    .foregroundColor(Color.primary)
+                            } //END: HStack
+                            
+                        ) {
+                            ForEach(0..<icons.iconNames.count) { index in
+                                HStack {
+                                    Image(uiImage: UIImage(named: self.icons.iconNames[index] ?? "Blue") ?? UIImage())
+                                        .renderingMode(.original)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 44, height: 44)
+                                        .cornerRadius(8)
+                                    
+                                    Spacer().frame(width: 8)
+                                    
+                                    Text(self.icons.iconNames[index] ?? "Blue")
+                                        .frame(alignment: .leading)
+                                } //END: HStack
+                                    .padding(3)
+                            } //END: ForEach
+                        } //END: Picker
+                            
+                            //MARK: - Picker Brain
+                            .onReceive([self.icons.currentIndex].publisher.first()) { value in
+                                // Get current icon index
+                                // alternateIconName = The name of Alternate icon if it's set, otherwise nil.
+                                let index = self.icons.iconNames.firstIndex(of: UIApplication.shared.alternateIconName) ?? 0
+                                print("DEBUG: Last Icon Index? : \(index), Next Icon Index: \(value)")
+                                // Check the index of new icon, if it's different from current icon index -> continue through function
+                                if index != value {
+                                    // Set new App Icon (setAlternateIconName)
+                                    UIApplication.shared.setAlternateIconName(self.icons.iconNames[value]) { (error) in
+                                        if let error = error {
+                                            print("DEBUG: \(error.localizedDescription)")
+                                        } else {
+                                            print("DEBUG: Success! Icon has changed..")
+                                        }
+                                    }
+                                }
+                        }
+                    } //END: Section
+                        .padding(.vertical, 3)
                     //MARK: - LinkViews
                     Section(header: Text("Follow me on social media")) {
                         FormRowLinkView(icon: "globe", color: Color.pink, text: "Linked In", link: "https://www.linkedin.com/in/jan-podmolik/")
                         FormRowLinkView(icon: "link", color: Color.pink, text: "Twitter", link: "https://twitter.com/JanPodmolik")
                         FormRowLinkView(icon: "heart", color: Color.pink, text: "Instagram", link: "https://www.instagram.com/wex.ly")
                     } //END: Section
-                    .padding(.vertical, 3)
+                        .padding(.vertical, 3)
                     //MARK: - StaticViews
                     Section(header: Text("About the application")) {
                         FormRowStaticView(icon: "gear", firstText: "Application", secondText: "Todo")
@@ -47,15 +104,15 @@ struct SettingsView: View {
                     .padding(.bottom, 8)
                     .foregroundColor(.secondary)
             } //END: VStack
-            .navigationBarItems(trailing:
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
+                .navigationBarItems(trailing:
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
                     }) {
-                       Image(systemName: "xmark")
+                        Image(systemName: "xmark")
                 })
                 .navigationBarTitle("Settings", displayMode: .inline)
                 .background(Color("ColorBackground")
-                .edgesIgnoringSafeArea(.all)
+                    .edgesIgnoringSafeArea(.all)
             )
             
         } //END: NavigationView
