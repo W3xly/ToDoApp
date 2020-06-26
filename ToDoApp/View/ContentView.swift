@@ -19,6 +19,7 @@ struct ContentView: View {
     
     @State private var showingAddTodoView: Bool = false
     @State private var animatingButton: Bool = false
+    @State private var showingSettingsView: Bool = false
     
     //MARK: - Body
     var body: some View {
@@ -39,13 +40,13 @@ struct ContentView: View {
                         leading: EditButton(),
                         trailing:
                         Button(action: {
-                            self.showingAddTodoView.toggle()
+                            self.showingSettingsView.toggle()
                         }, label: {
-                            Image(systemName: "plus")
+                            Image(systemName: "paintbrush")
+                                .imageScale(.large)
                         }) //END: Button
-                            .sheet(isPresented: $showingAddTodoView, content: {
-                                // passing manage object here
-                                AddTodoView().environment(\.managedObjectContext, self.managedObjectContext)
+                            .sheet(isPresented: $showingSettingsView, content: {
+                                SettingsView()
                             })
                 )
                 //MARK: - Empty todo view
