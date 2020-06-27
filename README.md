@@ -8,4 +8,5 @@ Data jsou ukládány do zařízení pomocí CoreData.
 <p float="left">
   <img src="/image1.jpg" width="200" />
   <img src="/image2.jpg" width="200" /> 
+  <img src="/image3.jpg" width="200" /> 
 </p>
