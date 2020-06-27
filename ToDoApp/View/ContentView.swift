@@ -109,6 +109,7 @@ struct ContentView: View {
                         ,alignment: .bottomTrailing
             )
         } //END: NavigationView
+        .navigationViewStyle(StackNavigationViewStyle())
     } //END: body
     
     //MARK: - Helpers
