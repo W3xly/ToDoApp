@@ -90,13 +90,13 @@ struct SettingsView: View {
                             Image(systemName: "circle.fill")
                                 .resizable()
                                 .frame(width: 10, height: 10)
-                                .foregroundColor(themes[self.theme.themeSettings].themeColor)
+                                .foregroundColor(themes[self.theme.themeIndex].themeColor)
                         }
                     ) {
                         List {
                             ForEach(themes, id: \.id) { item in
                                 Button(action: {
-                                    self.theme.themeSettings = item.id
+                                    self.theme.themeIndex = item.id
                                 }) {
                                     HStack {
                                         Image(systemName: "circle.fill")
@@ -147,6 +147,7 @@ struct SettingsView: View {
             )
             
         } //END: NavigationView
+            .accentColor(themes[self.theme.themeIndex].themeColor)
     }
 }
 

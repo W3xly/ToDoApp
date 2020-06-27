@@ -26,6 +26,9 @@ struct EmptyListView: View {
                           "Collect tasks ahead of time",
                           "Each night schedule for tomorrow."]
     
+    @ObservedObject var theme = ThemeSettings()
+    var themes: [Theme] = themeData
+    
     //MARK: - Body
     var body: some View {
         ZStack {

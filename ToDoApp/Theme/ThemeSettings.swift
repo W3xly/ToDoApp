@@ -9,9 +9,9 @@
 import SwiftUI
 
 class ThemeSettings: ObservableObject {
-    @Published var themeSettings: Int = UserDefaults.standard.integer(forKey: "Theme") {
+    @Published var themeIndex: Int = UserDefaults.standard.integer(forKey: "themeIndex") {
         didSet {
-            UserDefaults.standard.set(self.themeSettings, forKey: "Theme")
+            UserDefaults.standard.set(self.themeIndex, forKey: "themeIndex")
         }
     }
 }

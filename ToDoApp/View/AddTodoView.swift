@@ -26,6 +26,9 @@ struct AddTodoView: View {
     @State private var errorTitle: String = ""
     @State private var errorMessage: String = ""
     
+    @ObservedObject var theme = ThemeSettings()
+    var themes: [Theme] = themeData
+    
     
     //MARK: - Body
     
@@ -68,7 +71,7 @@ struct AddTodoView: View {
                             .font(.system(size: 24, weight: .bold, design: .default))
                             .padding()
                             .frame(minWidth: 0, maxWidth: .infinity)
-                            .background(Color.blue)
+                            .background(themes[self.theme.themeIndex].themeColor)
                             .cornerRadius(9)
                             .foregroundColor(.white)
                     } //END: Button
@@ -92,6 +95,7 @@ struct AddTodoView: View {
                           dismissButton: .default(Text("OK")))
                 })
         } //END: NavigationView
+        .accentColor(themes[self.theme.themeIndex].themeColor)
     } //END: body
 }
 
