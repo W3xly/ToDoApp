@@ -14,6 +14,9 @@ struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var icons: IconNames
     
+    let themes: [Theme] = themeData
+    @ObservedObject var theme = ThemeSettings()
+    
     //MARK: - Body
     
     var body: some View {
@@ -78,11 +81,39 @@ struct SettingsView: View {
                         }
                     } //END: Section
                         .padding(.vertical, 3)
+                    
+                    //MARK: - App Theme
+                    
+                    Section(header:
+                        HStack {
+                            Text("Choose the app theme")
+                            Image(systemName: "circle.fill")
+                                .resizable()
+                                .frame(width: 10, height: 10)
+                                .foregroundColor(themes[self.theme.themeSettings].themeColor)
+                        }
+                    ) {
+                        List {
+                            ForEach(themes, id: \.id) { item in
+                                Button(action: {
+                                    self.theme.themeSettings = item.id
+                                }) {
+                                    HStack {
+                                        Image(systemName: "circle.fill")
+                                            .foregroundColor(item.themeColor)
+                                        Text(item.themeName)
+                                    }
+                                } //END: Button
+                                    .accentColor(Color.primary)
+                            }
+                        }
+                    } //END: Section
+                    
                     //MARK: - LinkViews
                     Section(header: Text("Follow me on social media")) {
-                        FormRowLinkView(icon: "globe", color: Color.pink, text: "Linked In", link: "https://www.linkedin.com/in/jan-podmolik/")
-                        FormRowLinkView(icon: "link", color: Color.pink, text: "Twitter", link: "https://twitter.com/JanPodmolik")
-                        FormRowLinkView(icon: "heart", color: Color.pink, text: "Instagram", link: "https://www.instagram.com/wex.ly")
+                        FormRowLinkView(icon: "globe", color: Color(#colorLiteral(red: 0.1576931477, green: 0.2425388396, blue: 0.2885012627, alpha: 1)), text: "Linked In", link: "https://www.linkedin.com/in/jan-podmolik/")
+                        FormRowLinkView(icon: "link", color: Color(#colorLiteral(red: 0.1148131862, green: 0.6330112815, blue: 0.9487846494, alpha: 1)), text: "Twitter", link: "https://twitter.com/JanPodmolik")
+                        FormRowLinkView(icon: "heart", color: Color(#colorLiteral(red: 0.88390553, green: 0.2188745141, blue: 0.3934468627, alpha: 1)), text: "Instagram", link: "https://www.instagram.com/wex.ly")
                     } //END: Section
                         .padding(.vertical, 3)
                     //MARK: - StaticViews
